@@ -1,101 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <!-- https://jsfiddle.net/xlaptop2001/ada2zLe0/ -->
-        <meta charset="UTF-8">
-        <title>IoT Dashboard</title>
+<head>
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-        <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-        <script src="static/gridstack.min.js"></script>
-        <script src="static/base.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Float grid demo</title>
 
-        <link href="static/gridstack.min.css">
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.css">
-        <link href="static/base.css">
-    </head>
-    <body>
-        <div class="grid-stack">
-          <div class="grid-stack-item" data-gs-height="4" data-gs-width="4" data-gs-x="0" data-gs-y="0">
-            <div class="panel panel-info grid-stack-item-content">
-              <div class="panel-heading">
-                <h3 class="panel-title" data-toggle="tooltip" data-placement="bottom" title="Click to drag panel"><i class="fa fa-hdd-o"></i> Assigned Device(s)</h3>
-              </div>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/gridstack.min.css"/>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.0/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
 
-              <div class="panel-body">
-                <p style="text-align:center;">No Device(s) Assigned</p>
-              </div>
-            </div>
-          </div>
-          <div class="grid-stack-item" data-gs-height="4" data-gs-width="4" data-gs-x="4" data-gs-y="0">
-            <div class="panel panel-warning grid-stack-item-content">
-              <div class="panel-heading">
-                <h3 class="panel-title" data-toggle="tooltip" data-placement="bottom" title="Click to drag panel"><i class="fa fa-heartbeat"></i> DOCK ACTIVITY</h3>
-              </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.2.6/gridstack.min.css" />
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.2.6/gridstack.min.js'></script>
 
-
-              <div class="panel-body">
-                <p style="text-align:center;">Panel content</p>
-                <p style="text-align:center;">
-                  <button type="button" class="btn btn-success">See More Dock Activity</button>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="grid-stack-item" data-gs-height="4" data-gs-width="4" data-gs-x="8" data-gs-y="0">
-            <div class="panel panel-danger grid-stack-item-content">
-              <div class="panel-heading">
-
-                <h3 class="panel-title" data-toggle="tooltip" data-placement="bottom" title="Click to drag panel"><i class="fa fa-video-camera"></i> RECENT VIDEOS</h3>
-              </div>
-
-
-              <div class="panel-body">
-                <p style="text-align:center;">
-                  <table class="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Device</th>
-                        <th>Tags</th>
-                        <th>Recorded</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>cell is row 0, column 0</td>
-                        <td>cell is row 0, column 1</td>
-                        <td>cell is row 0, column 2</td>
-                      </tr>
-                      <tr>
-                        <td>cell is row 1, column 0</td>
-                        <td>cell is row 1, column 1</td>
-                        <td>cell is row 1, column 2</td>
-                      </tr>
-                      <tr>
-                        <td>cell is row 2, column 0</td>
-                        <td>cell is row 2, column 1</td>
-                        <td>cell is row 2, column 2</td>
-                      </tr>
-                      <tr>
-                        <td>cell is row 3, column 0</td>
-                        <td>cell is row 3, column 1</td>
-                        <td>cell is row 3, column 2</td>
-                      </tr>
-                      <tr>
-                        <td>cell is row 4, column 0</td>
-                        <td>cell is row 4, column 1</td>
-                        <td>cell is row 4, column 2</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-    </body>
+    <link rel="stylesheet" href="static/base.css" />
+    <script type="text/javascript" src='static/base.js'></script>
+</head>
+<body>
+    <div class="body">
+        <div class="grid-stack"></div>
+    </div>
+</body>
 </html>
