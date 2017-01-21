@@ -6,6 +6,7 @@ $(document).ready(function(){
 
 function init() {
     var options = {
+        height:20,
     };
     $('.grid-stack').gridstack(options);
     this.grid = $('.grid-stack').data('gridstack');
@@ -27,5 +28,3 @@ function add_panel(title, content, x, y, w, h){
 
     this.grid.addWidget(panel, x, y, w, h);
 }
-
-
