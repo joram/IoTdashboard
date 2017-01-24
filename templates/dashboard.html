@@ -11,7 +11,7 @@
     <title>Float grid demo</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/gridstack.min.css"/>
+    <!--<link rel="stylesheet" href="static/gridstack.min.css"/>-->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.0/jquery-ui.js"></script>
@@ -21,8 +21,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.2.6/gridstack.min.css" />
     <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.2.6/gridstack.min.js'></script>
 
-    <link rel="stylesheet" href="static/base.css" />
-    <script type="text/javascript" src='static/base.js'></script>
+    <link rel="stylesheet" href="static/css/base.css" />
+    <script type="text/javascript" src='static/js/base.js'></script>
 </head>
 <body>
 
@@ -33,8 +33,12 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dashboards <span class="caret"></span></a>
+              <ul id="dashboards_list" class="dropdown-menu">
+                <li><a href="#">default</a></li>
+              </ul>
+            </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
