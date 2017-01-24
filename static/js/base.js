@@ -1,3 +1,4 @@
+loading_dashboard = false;
 
 $(document).ready(function(){
     init();
@@ -10,34 +11,52 @@ function init() {
     };
     $('.grid-stack').gridstack(options);
     this.grid = $('.grid-stack').data('gridstack');
-    add_panel("hello world", "hello body", 1, 0, 4, 4);
-    add_panel("hello world 2", "hello body", 0, 1, 4, 4);
     $('.grid-stack').on('change', layout_change);
     update_dashboard_list();
+    load_dashboard('default')
 }
 
 
-function layout_change(event, items) {
-    serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
+function layout_change(event, panels) {
+    if(!loading_dashboard){
+        save_dashboard(panels)
+    }
+}
+
+
+function save_dashboard(panels){
+    panels = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
         el = $(el);
         var node = el.data('_gridstack_node');
+        var title_node = $(el.find('.panel-heading')[0])[0]
+        title = title_node.innerText
         return {
+            title: title,
             x: node.x,
             y: node.y,
             width: node.width,
             height: node.height
         };
     }, this);
-    data = JSON.stringify(serializedData, null, '    ');
+    title_node = $("#dashboard-title")[0]
+    dashboard_title = title_node.innerText
+    dashboard_slug = $(title_node).attr("data-slug")
+    url = "/ajax/dashboard/"+dashboard_slug
+
+    data = {
+        panels: panels,
+        title: dashboard_title,
+        slug: dashboard_slug
+    }
+    data = JSON.stringify(data, null, '    ');
 
     $.ajax({
       type: "POST",
-      url: "/ajax/dashboard/default",
+      url: url,
         data: data,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
     });
-    console.log("layout changed")
 };
 
 
@@ -62,12 +81,23 @@ function load_dashboard(slug){
         type: "GET",
         url: "/ajax/dashboard/"+slug,
         success: function( data ) {
+            loading_dashboard = true;
+
             this.grid = $('.grid-stack').data('gridstack');
             this.grid.removeAll();
-            $panels = JSON.parse(data)
+            $dashboard = JSON.parse(data)
+
+            // Load Title/Slug
+            $('#dashboard-title')[0].innerText = $dashboard.title
+            $($('#dashboard-title')[0]).attr("data-slug", $dashboard.slug)
+
+            // Load Panels
+            $panels = $dashboard.panels
             $.each($panels, function(key, panel ) {
                 add_panel(panel.title, panel.content, panel.x, panel.y, panel.width, panel.height)
             })
+
+            loading_dashboard = false;
         }
     })
 }
