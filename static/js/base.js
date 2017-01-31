@@ -14,6 +14,10 @@ function init() {
     $('.grid-stack').on('change', layout_change);
     update_dashboard_list();
     load_dashboard('default')
+    
+    $(".add_panel").on('click', function(){
+        add_panel("new panel", "", 0, 0, 4, 4);
+    });    
 }
 
 
@@ -108,11 +112,21 @@ function add_panel(title, content, x, y, w, h){
     <div>
         <div class="grid-stack-item-content panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">`+title+`</h3>
+                <div class="panel-title">`+title+`
+                <button type="button" class="btn btn-danger remove_panel"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+            </div>
             </div>
             <div class="panel-body">`+content+`</div>
         </div>
     </div>`);
 
     this.grid.addWidget(panel, x, y, w, h);
+
+    $(".remove_panel").on('click', function(){
+      console.log("removing panel");
+      var grid = $('.grid-stack').data('gridstack');
+      var panel = $(this).closest('.grid-stack-item');
+      console.log(panel);
+      grid.removeWidget(panel);    
+    });
 }

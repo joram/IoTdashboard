@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-from flask import Flask, render_template, request, abort, Blueprint
+from flask import Flask, render_template, request, abort, Blueprint, redirect, url_for
 import json
 import os
-from auth import get_google_userinfo
+from auth import get_google_userinfo, Unauthorized
 
 dashboard_views = Blueprint('dashboard_views', __name__)
 
@@ -24,6 +24,11 @@ EXAMPLE_DASHBOARD = {
 @dashboard_views.route('/')
 @dashboard_views.route('/dashboard')
 def home():
+    try:
+        user_info = get_google_userinfo()
+    except Unauthorized:
+      return redirect(url_for("auth.login"))
+
     context = {
         "user": get_google_userinfo()
     }

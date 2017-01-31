@@ -32,4 +32,19 @@
   margin-right: 10px;
 }
 
+.add_panel {
+  float: right;
+  padding: 10px;
+  margin: 20px;
+}
 
+
+.remove_panel {
+  float: right;
+  padding: 4px;
+  margin: 0px;
+}
+
+.panel-heading > h3 {
+  width: 50%;
+}
