@@ -19,7 +19,17 @@
 }
 
 .panel {
-width:100%;
-bottom: 0;
-top: 0;
+  width:100%;
+  bottom: 0;
+  top: 0;
 }
+
+.profile_picture {
+  float: left;
+  width: 25px;
+  height: 25px;
+  background-size: contain;
+  margin-right: 10px;
+}
+
+
