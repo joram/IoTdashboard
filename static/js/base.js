@@ -84,6 +84,8 @@ function update_dashboard_list() {
             dashboards_list.append($item);
             $item.click(function(){load_dashboard(val)});
         });
+        create = $('<li><a id="create_dashboard">Create Dashboard (TODO)</a></li>');
+        dashboards_list.append(create);
     });
 };
 
