@@ -110,6 +110,7 @@ function load_dashboard(slug){
             })
 
             loading_dashboard = false;
+            $('.dropdown-toggle').dropdown();
         }
     })
 }
@@ -119,10 +120,19 @@ function add_panel(title, content, x, y, w, h){
     panel = $(`
     <div>
         <div class="grid-stack-item-content panel panel-default">
-            <div class="panel-heading">
-                <div class="panel-title">`+title+`
-                <button type="button" class="btn btn-danger remove_panel"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-            </div>
+            <div class="panel-heading" style="height:45px;">
+              <div class="panel-title">
+                <div class="pull-left">`+title+`</div>
+                <div class="dropdown pull-right">
+                  <div class="dropdown-toggle" type="button" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-cog" ></span>
+                  </div>
+                  <ul class="dropdown-menu">
+                    <li><a class="remove_panel">Remove</a></li>
+                    <li><a class="edit_panel">Edit (TODO)</a></li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="panel-body">`+content+`</div>
         </div>

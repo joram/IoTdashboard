@@ -43,6 +43,9 @@ def get_google_userinfo():
         if e.code == 401:
             session.pop('access_token', None)
             raise Unauthorized()
+    except Exception as e:
+        print e
+        print res.content
 
     user_info = json.loads(res.read())
     return user_info

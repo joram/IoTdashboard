@@ -1,3 +1,4 @@
+
 .grid-stack, body,, html {
   width: 100%;
   height: 100%;
@@ -36,12 +37,6 @@
   margin: 20px;
 }
 
-
-.remove_panel {
-  float: right;
-  padding: 4px;
-  margin: 0px;
-}
 
 .panel-heading > h3 {
   width: 50%;
