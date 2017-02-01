@@ -18,17 +18,25 @@ function init() {
     $(".add_panel").on('click', function(){
         add_panel("new panel", "", 0, 0, 4, 4);
     });    
+
+    $.fn.editable.defaults.mode = 'inline';
+    $('#dashboard-title').editable();
+    $('#dashboard-title').on('save', function(e, params) {
+       $('#dashboard-title').innerText = params.newValue
+       save_dashboard();
+    });
+
 }
 
 
 function layout_change(event, panels) {
     if(!loading_dashboard){
-        save_dashboard(panels)
+        save_dashboard()
     }
 }
 
 
-function save_dashboard(panels){
+function save_dashboard(){
     panels = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
         el = $(el);
         var node = el.data('_gridstack_node');

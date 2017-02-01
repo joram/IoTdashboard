@@ -48,30 +48,6 @@ def get_google_userinfo():
     return user_info
 
 
-
-@auth_views.route('/auth')
-def index():
-    access_token = session.get('access_token')
-    if access_token is None:
-        return redirect(url_for('auth.login'))
-
-    access_token = access_token[0]
-
-    headers = {'Authorization': 'OAuth '+access_token}
-    req = Request('https://www.googleapis.com/oauth2/v1/userinfo',
-                  None, headers)
-    try:
-        res = urlopen(req)
-    except URLError, e:
-        if e.code == 401:
-            # Unauthorized - bad token
-            session.pop('access_token', None)
-            return redirect(url_for('auth.login'))
-        return res.read()
-
-    return res.read()
-
-
 @auth_views.route('/login')
 def login():
     callback=url_for('auth.authorized', _external=True)
@@ -84,7 +60,7 @@ def login():
 def authorized(resp):
     access_token = resp['access_token']
     session['access_token'] = access_token, ''
-    return redirect(url_for('auth.index'))
+    return redirect(url_for('auth.login'))
 
 
 @google.tokengetter
@@ -92,3 +68,13 @@ def get_access_token():
     return session.get('access_token')
 
 
+def auth_required(view):
+
+    def wrapper():
+        try:
+            get_google_userinfo()
+        except Unauthorized:
+            return redirect(url_for('auth.login'))
+        return view()
+
+    return wrapper
