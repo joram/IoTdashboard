@@ -14,16 +14,15 @@ function init() {
     $('.grid-stack').on('change', layout_change);
     update_dashboard_list();
     load_dashboard('default')
-    
+
     $(".add_panel").on('click', function(){
         add_panel("new panel", "", 0, 0, 4, 4);
-    });    
+    });
 
     $.fn.editable.defaults.mode = 'inline';
     $('#dashboard-title').editable();
     $('#dashboard-title').on('save', function(e, params) {
-       $('#dashboard-title').innerText = params.newValue
-       save_dashboard();
+    setTimeout(save_dashboard, 200);
     });
 
 }
@@ -124,7 +123,7 @@ function add_panel(title, content, x, y, w, h){
         <div class="grid-stack-item-content panel panel-default">
             <div class="panel-heading" style="height:45px;">
               <div class="panel-title">
-                <div class="pull-left">`+title+`</div>
+                <div class="pull-left editable editable-click panel_title">`+title+`</div>
                 <div class="dropdown pull-right">
                   <div class="dropdown-toggle" type="button" data-toggle="dropdown">
                     <span class="glyphicon glyphicon-cog" ></span>
@@ -147,6 +146,12 @@ function add_panel(title, content, x, y, w, h){
       var grid = $('.grid-stack').data('gridstack');
       var panel = $(this).closest('.grid-stack-item');
       console.log(panel);
-      grid.removeWidget(panel);    
+      grid.removeWidget(panel);
     });
+
+    $('.panel_title').editable();
+    $(".panel_title").on('save', function(e, params) {
+      setTimeout(save_dashboard, 200);
+    });
+
 }
