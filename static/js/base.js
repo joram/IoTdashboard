@@ -76,16 +76,24 @@ function update_dashboard_list() {
     dashboards_list.empty()
 
     $.getJSON( "/ajax/dashboards", function( data ) {
-        $.each( data, function( key, val ) {
-            $anchor = $("<a>"+val+"</a>");
+        $.each( data, function( key, details ) {
+            $anchor = $("<a>"+details.title+"</a>");
             $item = $("<li></li>");
             $item.append($anchor);
             dashboards_list.append($item);
-            $item.click(function(){load_dashboard(val)});
+            $item.click(function(){load_dashboard(details.slug)});
         });
-        create = $('<li><a id="create_dashboard">Create Dashboard (TODO)</a></li>');
+        create = $('<li><a id="create_dashboard">Create New</a></li>');
         dashboards_list.append(create);
+        $("#create_dashboard").on('click', function(){
+            $.post( "/ajax/dashboard", function(new_dashboard_slug, textStatus, jqXHR){
+                update_dashboard_list();
+                load_dashboard(new_dashboard_slug);
+            });
+        });
+
     });
+
 };
 
 

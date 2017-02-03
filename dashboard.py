@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-from flask import Flask, render_template, request, abort, Blueprint, redirect, url_for
+import datetime
+from flask import render_template, request, abort, Blueprint, redirect
 import json
 import os
-from auth import get_google_userinfo, Unauthorized, auth_required
+from auth import get_google_userinfo, auth_required
 
 dashboard_views = Blueprint('dashboard_views', __name__)
 
@@ -59,18 +60,35 @@ def _save_dashboard(data):
 
 @dashboard_views.route('/ajax/dashboards', methods=['GET'])
 def dashboards():
+    dashboard_titles = []
     dashboards = os.listdir(_dashboards_path())
     if len(dashboards) == 0:
-      _save_dashboard(EXAMPLE_DASHBOARD)
-      dashboards = os.listdir(_dashboards_path())
-    return json.dumps([os.path.splitext(dashboard)[0] for dashboard in dashboards])
+        _save_dashboard(EXAMPLE_DASHBOARD)
+    dashboards = os.listdir(_dashboards_path())
+
+    for dashboard_filename in dashboards:
+        filepath = os.path.join(_dashboards_path(), dashboard_filename)
+        with open(filepath, "r") as f:
+            data = json.loads(f.read())
+            title = data['title']
+            slug = data['slug']
+            dashboard_titles.append({'title': title, 'slug': slug})
+    return json.dumps(dashboard_titles)
+
+
+@dashboard_views.route('/ajax/dashboard', methods=['POST'])
+def create_dashboard():
+    data = dict(EXAMPLE_DASHBOARD)
+    data['slug'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    _save_dashboard(data)
+    return data['slug']
 
 
 @dashboard_views.route('/ajax/dashboard/<slug>', methods=['POST'])
 def save_dashboard(slug):
     if request.method == "POST":
         _save_dashboard(request.json)
-        return ""
+        return request.json['slug']
     abort(412)
 
 
