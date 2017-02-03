@@ -22,9 +22,18 @@ EXAMPLE_DASHBOARD = {
 
 
 @dashboard_views.route('/')
+def landing():
+    try:
+        get_google_userinfo()
+        return redirect("/dashboard")
+    except Exception as e:
+        print e
+        return render_template("landing.html")
+
+
 @dashboard_views.route('/dashboard')
 @auth_required
-def home():
+def dashboard():
     context = {
         "user": get_google_userinfo()
     }
