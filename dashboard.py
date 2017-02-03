@@ -26,8 +26,7 @@ def landing():
     try:
         get_google_userinfo()
         return redirect("/dashboard")
-    except Exception as e:
-        print e
+    except:
         return render_template("landing.html")
 
 
