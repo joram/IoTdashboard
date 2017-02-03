@@ -24,6 +24,7 @@ google = oauth.remote_app(
     consumer_key=settings.GOOGLE_CLIENT_ID,
     consumer_secret=settings.GOOGLE_CLIENT_SECRET)
 
+
 class Unauthorized(Exception):
     pass
 
@@ -43,9 +44,6 @@ def get_google_userinfo():
         if e.code == 401:
             session.pop('access_token', None)
             raise Unauthorized()
-    except Exception as e:
-        print e
-        print res.content
 
     user_info = json.loads(res.read())
     return user_info
@@ -53,17 +51,16 @@ def get_google_userinfo():
 
 @auth_views.route('/login')
 def login():
-    callback=url_for('auth.authorized', _external=True)
+    callback = url_for('auth.authorized', _external=True)
     return google.authorize(callback=callback)
 
 
-
-@auth_views.route(settings.REDIRECT_URI)
+@auth_views.route("/google_authorized")
 @google.authorized_handler
 def authorized(resp):
     access_token = resp['access_token']
     session['access_token'] = access_token, ''
-    return redirect(url_for('auth.login'))
+    return redirect("/")
 
 
 @google.tokengetter

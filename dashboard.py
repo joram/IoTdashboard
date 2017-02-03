@@ -28,7 +28,6 @@ def home():
     context = {
         "user": get_google_userinfo()
     }
-    print context
     return render_template("dashboard.html", **context)
 
 
@@ -42,13 +41,13 @@ def _dashboards_path():
         os.makedirs(path)
     return path
 
+
 def _save_dashboard(data):
     data_str = json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
     filepath = os.path.join(_dashboards_path(), "{}.json".format(data.get("slug")))
     with open(filepath, "w") as f:
-	print "saving dashboard: %s" % filepath
         f.write(data_str)
-    
+
 
 @dashboard_views.route('/ajax/dashboards', methods=['GET'])
 def dashboards():
@@ -56,7 +55,6 @@ def dashboards():
     if len(dashboards) == 0:
       _save_dashboard(EXAMPLE_DASHBOARD)
       dashboards = os.listdir(_dashboards_path())
-    print "listing dashboards: %s" % dashboards
     return json.dumps([os.path.splitext(dashboard)[0] for dashboard in dashboards])
 
 
