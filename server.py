@@ -10,6 +10,7 @@ import settings
 
 app = Flask(__name__, static_url_path='/static')
 app.debug = True
+app.port = os.environ.get("PORT", 5000)
 app.secret_key = settings.SECRET_KEY
 app.register_blueprint(auth_views)
 app.register_blueprint(dashboard_views)
