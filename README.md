@@ -14,6 +14,7 @@ pip install -r requirements.txt
 ###Create `settings.py`
 It should contain the following variables set in it:
 ```
+REDIS_URL = "..."
 SECRET_KEY = "..."  # a random constant key for your server
 GOOGLE_CLIENT_ID = "....apps.googleusercontent.com"
 GOOGLE_CLIENT_SECRET = "..."
