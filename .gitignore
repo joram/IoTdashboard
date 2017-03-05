@@ -1,3 +1,4 @@
 .idea
 user_data/*
 *.pyc
+scripts/.activate
